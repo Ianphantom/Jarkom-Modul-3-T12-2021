@@ -1,9 +1,9 @@
 ﻿# Jarkom-Modul-3-T12-2021
 
 Nama Kelompok :  
-- Ian Felix Jonathan Simanjuntak
-- Muhammad Zakky Ghufron
-- Muhammad Naufal Imantyasto
+- Ian Felix Jonathan Simanjuntak (nomor 1-6)
+- Muhammad Zakky Ghufron (Nomor 7-10)
+- Muhammad Naufal Imantyasto (Nomor 11 -13)
 
 ### Gambar Topologi
 ![image](https://user-images.githubusercontent.com/50267676/141628788-d83842a9-69af-40f9-ad40-1b98899b6788.png)
@@ -383,7 +383,7 @@ Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencar
 Untuk melakukan limitasi dari speeddownload, maka kami menambahkan setingan berikut ini pada `/etc/squid/squid.conf`
 ```
 acl multimedia url_regex -i \.png$ \.jpg$
-acl bar proxy_auth luffybelikapalt07
+acl bar proxy_auth luffybelikapalt12
 delay_pools 1
 delay_class 1 1
 delay_parameters 1 1250/6400
@@ -396,5 +396,19 @@ tujuannya adalah membatasi speed download luffy ketika melakukan pemeriksaan ter
 ### Ujicoba
 pada loguetown, atur proxy dengan credential berikut ini
 ```bash
-export http_proxy="http://zorobelikapalt07:zoro_t07@jualbelikapal.t07.com:5000"
+export http_proxy="http://zorobelikapalt12:zoro_t12@jualbelikapal.t12.com:5000"
+```
+lalu lakukan ujicoba sebagai berikut :
+```bash
+wget http://super.franky.t12.com/public/images/fake-franky.jpg234
+```
+![image](https://user-images.githubusercontent.com/50267676/141644654-111085a9-58ea-4272-8b7c-6af8d01c8225.png)
+^^ Untuk zorro speed limit nya tidak dibatasi
+
+```bash
+export http_proxy="http://luffybelikapalt12:luffy_t12@jualbelikapal.t12.com:5000"
+```
+lalu lakukan ujicoba sebagai berikut :
+```bash
+wget http://super.franky.t12.com/public/images/fake-franky.jpg234
 ```
