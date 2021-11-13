@@ -235,3 +235,44 @@ auth_param basic casesensitive on
 acl USERS proxy_auth REQUIRED
 http_access allow USERS
 ```
+Berikutnya, untuk membatasi waktu akses kami menambahkan settingan pada `/etc/squid/acl.conf` sebagai berikut
+```
+acl AVAILABLE_WORKING time MTWH 07:00-11:00
+acl AVAILABLE_WORKING time TWHF 17:00-23:59
+acl AVAILABLE_WORKING time A    00:00-03:00
+```
+untuk setingan dari Hari dan jam nya disesuaikan dengan soal yang ada. Setelah membuat settingan tersebut, pada `/etc/squid/acl.conf` ditambahkan kode berikut ini
+```
+include /etc/squid/acl.conf
+http_access allow AVAILABLE_WORKING
+http_access deny al
+```
+
+##### Konfigurasi EnniesLobby
+Karena pada soal diminta proxy harus bisa diakses dengan nama jualbelikapal.yyy.com, maka kita perlu membuat sebuah domain pada EniesLobby. Pertama sekali, kita perlu membuat settingan pada `/etc/bind/named.conf.local` sebagai berikut ini
+```bash
+echo "
+zone \"jualbelikapal.t12.com\" {
+        type master;
+        file \"/etc/bind/jarkom/jualbelikapal.t12.com\";
+};
+"> /etc/bind/named.conf.local
+mkdir -p  /etc/bind/jarkom
+```
+setelah itu kami memembuat sebuah directory jarkom untuk menyimpan setinggan file dari domain jualbelikapal.t12.com. Lalu kami membuat file jualbelikapal.t12.com pada folder jarkom tersebut dan kami isi dengan konfigurasi berikut ini 
+```
+;
+; BIND data file for local loopback interface
+;
+\$TTL    604800
+@       IN      SOA     jualbelikapal.t12.com. root.jualbelikapal.t12.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      jualbelikapal.t12.com.
+@       IN      A       192.217.2.3
+```
+dapat dilihat bahwa domani jualbelikapal.t12.com akan diarahkan menuju IP 192.217.2.3 (Water7).
