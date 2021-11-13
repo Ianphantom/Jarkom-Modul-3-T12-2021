@@ -276,3 +276,15 @@ setelah itu kami memembuat sebuah directory jarkom untuk menyimpan setinggan fil
 @       IN      A       192.217.2.3
 ```
 dapat dilihat bahwa domani jualbelikapal.t12.com akan diarahkan menuju IP 192.217.2.3 (Water7).
+
+### Uji Coba
+Pada loguetown, pertama sekali jalankan proxy dengan perintah
+```bash
+export http_proxy="http://jualbelikapal.t12.com:5000"
+```
+
+![image](https://user-images.githubusercontent.com/50267676/141644113-e71598a0-9c83-4a47-92cc-43f8604d73ae.png)
+^^ Meminta Authentikasi User terlebih dahulu
+
+![image](https://user-images.githubusercontent.com/50267676/141643787-f51af8e5-f6d8-40d5-a9b4-9bc57becd71b.png)
+^^ Ketika waktu yang sudah diatur sesuai dengan waktu saat menggunakan proxy.
