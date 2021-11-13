@@ -417,3 +417,7 @@ wget http://super.franky.t12.com/public/images/fake-franky.jpg234
 ```
 ![image](https://user-images.githubusercontent.com/50267676/141645414-f5f7ae65-1071-4628-ba2b-3738c5aa73dc.png)
 ^^ Speed luffy sudah dilimit
+
+### Kendala
+- Kendala 1 : Terkadang, meskipun sudah mengatur Iptables dan memasukkan nameserver dan sudah bisa ngeping google tetapi untuk melakukan update hanya 0% terus
+- Kendala 2 : Pada saat melakukan lynx google.com yang harusnya sudah terdirect ke super.franky.t12.com, justru terdirect ke mercusuar tetapi diatasi di nomor 11 pada konfigurasi Water7
