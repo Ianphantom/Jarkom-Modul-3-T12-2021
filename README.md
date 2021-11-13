@@ -68,4 +68,17 @@ subnet 192.217.1.0 netmask 255.255.255.0 {
    max-lease-time 7200;
 }
 ```
-dapat dilihat pada kode diatas, untuk subnet 192.217.1.0 kami mengatur range sesuai dengan ketentuan yang ada pada soal.
+dapat dilihat pada kode diatas, untuk subnet 192.217.1.0 kami mengatur range sesuai dengan ketentuan yang ada pada soal. Untuk switch 1 waktu lease adalah 6 menit atau 360 detik dan juga `max-lease-time` nya adalah 7200. `domain-name-servers` kami gunakan adalah EniesLobby (192.217.2.2).  
+
+Untuk melakukan setting pada swith 2 kami memasukkan konfigurasi berikut ini pada `/etc/dhcp/dhcp.conf`
+```
+subnet 192.217.3.0 netmask 255.255.255.0 {
+   range 192.217.3.30 192.217.3.50; 
+   option routers 192.217.3.1;
+   option broadcast-address 192.217.3.255;
+   option domain-name-servers 192.217.2.2;
+   default-lease-time 720;
+   max-lease-time 7200;
+}
+```
+dapat dilihat dari kode tersebut, kami sudah mengatur range IP sesuai dengan ketentuan dari soal. Untuk switch 2 waktu lease adalah 12 menit atau 720 detik dan juga `max-lease-time` nya adalah 7200. `domain-name-servers` kami gunakan adalah EniesLobby (192.217.2.2).
