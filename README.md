@@ -82,3 +82,20 @@ subnet 192.217.3.0 netmask 255.255.255.0 {
 }
 ```
 dapat dilihat dari kode tersebut, kami sudah mengatur range IP sesuai dengan ketentuan dari soal. Untuk switch 2 waktu lease adalah 12 menit atau 720 detik dan juga `max-lease-time` nya adalah 7200. `domain-name-servers` kami gunakan adalah EniesLobby (192.217.2.2).
+
+Untuk menjalankan relay, tidak lupa juga kami menambahkan konfigurasi berikut ini pada `/etc/dhcp/dhcp.conf`
+```
+subnet 192.217.2.0 netmask 255.255.255.0{}
+```
+
+##### Konfigurasi Client
+Untuk menerapkan DHCP pada setiap client, kita harus merubah settingan pada `/etc/network/interfaces` menjadi
+```bash
+auto eth0
+iface eth0 inet dhcp
+```
+
+##### Konfigurasi EniesLobby
+Karena pada soal ada permintaan bahwa dari DNS server setiap client harus bisa mengakses internet, maka pada
+
+### Uji Coba
