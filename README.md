@@ -219,3 +219,19 @@ Setelah melakukan instalasi squid, kami melakukan backup setting bawaan dari squ
 http_port 5000
 visible_hostname Water7
 ```
+Selanjutnya, agar transaksi lebih aman, kami menambahkan setingan authentikasi dengan menambahkan crediensial pengguna menggunakan htpasswd sebagai berikut
+```bash
+apt-get install apache2-utils -y
+htpasswd -b -c /etc/squid/passwd luffybelikapalt12 luffy_t12 
+htpasswd -b /etc/squid/passwd zorobelikapalt12 zoro_t12
+```
+Setelah menambahkan kode tersebut, kita perlu untuk menambahkan settingan berikut ini pada `/etc/squid/squid.conf`
+```
+auth_param basic program /usr/lib/squid/basic_ncsa_auth /etc/squid/passwd
+auth_param basic children 5
+auth_param basic realm Proxy
+auth_param basic credentialsttl 2 hours
+auth_param basic casesensitive on
+acl USERS proxy_auth REQUIRED
+http_access allow USERS
+```
