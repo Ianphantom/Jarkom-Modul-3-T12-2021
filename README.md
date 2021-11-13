@@ -415,3 +415,5 @@ lalu lakukan ujicoba sebagai berikut :
 ```bash
 wget http://super.franky.t12.com/public/images/fake-franky.jpg234
 ```
+![image](https://user-images.githubusercontent.com/50267676/141645414-f5f7ae65-1071-4628-ba2b-3738c5aa73dc.png)
+^^ Speed luffy sudah dilimit
