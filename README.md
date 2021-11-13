@@ -288,3 +288,113 @@ export http_proxy="http://jualbelikapal.t12.com:5000"
 
 ![image](https://user-images.githubusercontent.com/50267676/141643787-f51af8e5-f6d8-40d5-a9b4-9bc57becd71b.png)
 ^^ Ketika waktu yang sudah diatur sesuai dengan waktu saat menggunakan proxy.
+
+
+### Soal Nomor 11
+Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar mudah mengingat website transaksi jual beli kapal. Setiap mengakses google.com, akan diredirect menuju super.franky.yyy.com dengan website yang sama pada soal shift modul 2. Web server super.franky.yyy.com berada pada node Skypie
+
+### jawaban Soal Nomor 11
+##### konfigurasi Skypie (Webserver)
+kami menggunakan konfigurasi yang sama dengan modul sebelumnya. berikut adalah konfigurasi yang kami gunakan 
+``` bash
+apt-get install apache2 -y
+apt-get install php -y
+apt-get install libapache2-mod-php7.0 -y
+apt-get install wget -y
+apt-get install unzip -y
+apt-get install apache2-utils -y
+echo "
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        #ServerName www.example.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/super.franky.t12.com
+        ServerName super.franky.t12.com
+        ServerAlias www.super.franky.t12.com
+        <Directory /var/www/super.franky.t12.com/public>
+                Options +Indexes
+        </Directory>
+        #<Directory /var/www/super.franky.t12.com/public/*>
+        #        Options -Indexes
+        #</Directory>
+        Alias \"/js\" \"/var/www/super.franky.t12.com/public/js\"
+        ErrorDocument 404 /error/404.html
+        <Files \"/var/www/super.franky.t12.com/error/404.html\">
+                <If \"-z %{ENV:REDIRECT_STATUS}\">
+                        RedirectMatch 404 ^/error/404.html$
+                </If>
+        </Files>
+         <Directory /var/www/super.franky.t12.com>
+                Options +FollowSymLinks -Multiviews
+                AllowOverride All
+        </Directory>
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+" > /etc/apache2/sites-available/super.franky.t12.com.conf
+
+mkdir /var/www/super.franky.t12.com
+wget https://raw.githubusercontent.com/FeinardSlim/Praktikum-Modul-2-Jarkom/main/super.franky.zip
+unzip super.franky.zip
+mv super.franky/* /var/www/super.franky.t12.com
+rm -r super.franky
+a2ensite super.franky.t12.com
+service apache2 restart
+```
+
+##### Konfigurasi Water7
+untuk melakukan redirect kami menambahkan kode berikut ini pada `/etc/squid/squid.conf` sebagai berikut 
+```
+dns_nameservers 192.217.2.2
+acl badsites dstdomain google.com
+deny_info http://super.franky.t12.com/ badsites
+deny_info ERR_ACCESS_DENIED all
+http_reply_access deny badsites
+```
+penambahan `dns_nameservers 192.217.2.2` ditujukan agar super.franky.t12.com ditemukan.
+
+### Ujicoba
+![image](https://user-images.githubusercontent.com/50267676/141644537-760eee42-aa90-4e2c-a43f-5155d1250121.png)
+![image](https://user-images.githubusercontent.com/50267676/141644518-0dc90378-72bd-4efe-88df-afc6623fa828.png)
+^^ sudah diarahkan ke super.franky.t12.com
+
+### Soal nomor 12 dan 13
+Saatnya berlayar! Luffy dan Zoro akhirnya memutuskan untuk berlayar untuk mencari harta karun di super.franky.yyy.com. Tugas pencarian dibagi menjadi dua misi, Luffy bertugas untuk mendapatkan gambar (.png, .jpg), sedangkan Zoro mendapatkan sisanya. Karena Luffy orangnya sangat teliti untuk mencari harta karun, ketika ia berhasil mendapatkan gambar, ia mendapatkan gambar dan melihatnya dengan kecepatan 10 kbps (12). Sedangkan, Zoro yang sangat bersemangat untuk mencari harta karun, sehingga kecepatan kapal Zoro tidak dibatasi ketika sudah mendapatkan harta yang diinginkannya (13).
+
+### Jawaban soal nomor 12 dan 13
+Untuk melakukan limitasi dari speeddownload, maka kami menambahkan setingan berikut ini pada `/etc/squid/squid.conf`
+```
+acl multimedia url_regex -i \.png$ \.jpg$
+acl bar proxy_auth luffybelikapalt07
+delay_pools 1
+delay_class 1 1
+delay_parameters 1 1250/6400
+delay_access 1 allow multimedia bar
+delay_access 1 deny ALL
+http_access deny ALL
+```
+tujuannya adalah membatasi speed download luffy ketika melakukan pemeriksaan terkait PNG dan JPG
+
+### Ujicoba
+pada loguetown, atur proxy dengan credential berikut ini
+```bash
+export http_proxy="http://zorobelikapalt07:zoro_t07@jualbelikapal.t07.com:5000"
+```
