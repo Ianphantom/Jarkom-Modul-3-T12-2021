@@ -131,3 +131,70 @@ options {
 ![image](https://user-images.githubusercontent.com/50267676/141642861-a1c9dcc8-5bc8-4679-a940-ae97507b74ab.png)
 
 Dapat dilihat bahwa, setiap client sudah mendapatkan IP secara DHCP dengan range yang sudah ditentukan sebelumnya. Dan setiap Client juga sudah mendapatkan nameserver dari EniesLobby.
+
+### Soal Nomor 7
+Luffy dan Zoro berencana menjadikan Skypie sebagai server untuk jual beli kapal yang dimilikinya dengan alamat IP yang tetap dengan IP [prefix IP].3.69
+
+### Jawaban Nomor 7
+##### Konfigurasi Skypie
+Untuk menjadikan Skypie mendapatkan alamat IP tetap, pertama sekali kita harus mendapatkan hwaddress dari skype dan mengatur `/etc/network/interfaces` menjadi sebagai berikut
+```
+auto eth0
+iface eth0 inet dhcp
+hwaddress ether de:d3:23:e1:5d:c1 
+```
+alamat `de:d3:23:e1:5d:c1 ` merupakan hwaddress pada skypie.
+
+##### Konfigurasi Jipangu
+Pada jipangu kami menambahkan kode berikut ini agar skypie mendapatkan alamat tetap pada `/etc/dhcp/dhcp.conf`
+```
+host Skypie {
+    hardware ethernet de:d3:23:e1:5d:c1;
+    fixed-address 192.217.3.69;
+}
+```
+dapat dilihat bahwa, kami memasukkan `fixed-address 192.217.3.69` untuk Skypie. Sehingga secara keseluruhan isi code dari `/etc/dhcp/dhcp.conf` adalah sebagai berikut ini
+```bash
+echo "
+ddns-update-style none;
+
+option domain-name \"example.org\";
+option domain-name-servers ns1.example.org, ns2.example.org;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+log-facility local7;
+
+subnet 192.217.2.0 netmask 255.255.255.0{}
+
+subnet 192.217.1.0 netmask 255.255.255.0 {
+   range 192.217.1.20 192.217.1.99;
+   range 192.217.1.150 192.217.1.169; 
+   option routers 192.217.1.1;
+   option broadcast-address 192.217.1.255;
+   option domain-name-servers 192.217.2.2;
+   default-lease-time 360;
+   max-lease-time 7200;
+}
+
+subnet 192.217.3.0 netmask 255.255.255.0 {
+   range 192.217.3.30 192.217.3.50; 
+   option routers 192.217.3.1;
+   option broadcast-address 192.217.3.255;
+   option domain-name-servers 192.217.2.2;
+   default-lease-time 720;
+   max-lease-time 7200;
+}
+
+host Skypie {
+    hardware ethernet de:d3:23:e1:5d:c1;
+    fixed-address 192.217.3.69;
+}
+" > /etc/dhcp/dhcpd.conf
+```
+
+### Uji Coba
+![image](https://user-images.githubusercontent.com/50267676/141643101-9a14a99d-a4d8-4a62-a237-428b4164c556.png)
+
+dapat dilihat bahwa, Skypie sudah menggunakan alamat tetap yatu 192.217.3.69 dan sudah mendapatkan namserver secara otomatis.
