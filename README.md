@@ -289,6 +289,9 @@ export http_proxy="http://jualbelikapal.t12.com:5000"
 ![image](https://user-images.githubusercontent.com/50267676/141643787-f51af8e5-f6d8-40d5-a9b4-9bc57becd71b.png)
 ^^ Ketika waktu yang sudah diatur sesuai dengan waktu saat menggunakan proxy.
 
+![image](https://user-images.githubusercontent.com/50267676/141645186-1d7c36ad-94a4-478d-879b-36edeb236770.png)
+^^ Ketika waktu yang sudah diatur bertentangan dengan settingan waktu proxy
+
 
 ### Soal Nomor 11
 Agar transaksi bisa lebih fokus berjalan, maka dilakukan redirect website agar mudah mengingat website transaksi jual beli kapal. Setiap mengakses google.com, akan diredirect menuju super.franky.yyy.com dengan website yang sama pada soal shift modul 2. Web server super.franky.yyy.com berada pada node Skypie
