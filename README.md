@@ -198,3 +198,24 @@ host Skypie {
 ![image](https://user-images.githubusercontent.com/50267676/141643101-9a14a99d-a4d8-4a62-a237-428b4164c556.png)
 
 dapat dilihat bahwa, Skypie sudah menggunakan alamat tetap yatu 192.217.3.69 dan sudah mendapatkan namserver secara otomatis.
+
+### Soal Nomor 8 9 10
+- Pada Loguetown, proxy harus bisa diakses dengan nama jualbelikapal.yyy.com dengan port yang digunakan adalah 5000 (8). 
+- Agar transaksi jual beli lebih aman dan pengguna website ada dua orang, proxy dipasang autentikasi user proxy dengan enkripsi MD5 dengan dua username, yaitu luffybelikapalyyy dengan password luffy_yyy dan zorobelikapalyyy dengan password zoro_yyy (9). 
+- Transaksi jual beli tidak dilakukan setiap hari, oleh karena itu akses internet dibatasi hanya dapat diakses setiap hari Senin-Kamis pukul 07.00-11.00 dan setiap hari Selasa-Jum’at pukul 17.00-03.00 keesokan harinya (sampai Sabtu pukul 03.00) (10).
+
+### Jawaban Soal Nomor 8 9 10
+##### Konfigurasi Water7
+Untuk menjadikan Water7 sebagai proxy server, pertama sekali melakukan installasi sebagai berikut
+```bash
+echo "nameserver 192.168.122.1" > /etc/resolv.conf
+apt-get update -y
+apt-get install nano -y
+apt-get install squid -y
+mv /etc/squid/squid.conf /etc/squid/squid.conf.bak
+```
+Setelah melakukan instalasi squid, kami melakukan backup setting bawaan dari squid tersebut. selanjutnya agar bisa diakses melalui port 5000, pada `/etc/squid/squid.conf` kami menambahkan kode berikut ini.
+```
+http_port 5000
+visible_hostname Water7
+```
