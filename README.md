@@ -120,3 +120,14 @@ options {
 " > /etc/bind/named.conf.options
 ```
 ### Uji Coba
+
+##### Pada Loguetown
+![image](https://user-images.githubusercontent.com/50267676/141642894-e1de332c-fdf0-450b-bc86-d2095db296d9.png)
+
+##### Pada Alabasta
+![image](https://user-images.githubusercontent.com/50267676/141642800-fbd7334a-dacf-4d93-ad9f-ceb5b9cb934e.png)
+
+##### Pada TottoLand
+![image](https://user-images.githubusercontent.com/50267676/141642861-a1c9dcc8-5bc8-4679-a940-ae97507b74ab.png)
+
+Dapat dilihat bahwa, setiap client sudah mendapatkan IP secara DHCP dengan range yang sudah ditentukan sebelumnya. Dan setiap Client juga sudah mendapatkan nameserver dari EniesLobby.
