@@ -96,6 +96,27 @@ iface eth0 inet dhcp
 ```
 
 ##### Konfigurasi EniesLobby
-Karena pada soal ada permintaan bahwa dari DNS server setiap client harus bisa mengakses internet, maka pada
+Karena pada soal ada permintaan bahwa dari DNS server setiap client harus bisa mengakses internet, maka pada EniesLobby pertama sekali kami menjalan kode berikut ini 
+```bash
+echo "nameserver 192.168.122.1" >/etc/resolv.conf
+apt-get update -y
+apt-get install nano -y
+apt-get install bind9 -y
+apt-get install lynx -y
+```
+Hal yang kami lakukan adalah memasukkan nameserver yang sama dengan yang ada pada Foosha. setelah bisa mengakses internet maka kami melakukan update dan instalasi Bind9. Setelah itu, kami membuat kode DNS Forwarder pada `/etc/bind/named.conf.options` agar setiap client bisa mengakses internet melalui Foosha sebagai berikut : 
+```bash
+echo "
+options {
+        directory \"/var/cache/bind\";
+        forwarders {
+                192.168.122.1;
+        };
+        allow-query{any;};
+        auth-nxdomain no;
+        listen-on-v6 { any; };
+};
 
+" > /etc/bind/named.conf.options
+```
 ### Uji Coba
