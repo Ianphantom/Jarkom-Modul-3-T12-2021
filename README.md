@@ -421,3 +421,4 @@ wget http://super.franky.t12.com/public/images/fake-franky.jpg234
 ### Kendala
 - Kendala 1 : Terkadang, meskipun sudah mengatur Iptables dan memasukkan nameserver dan sudah bisa ngeping google tetapi untuk melakukan update hanya 0% terus
 - Kendala 2 : Pada saat melakukan lynx google.com yang harusnya sudah terdirect ke super.franky.t12.com, justru terdirect ke mercusuar tetapi diatasi di nomor 11 pada konfigurasi Water7
+- Kendala 3 : Pertama sekali sangat susah untuk menjalankan relay karena tidak ada di modul
